@@ -1,7 +1,5 @@
 package round1;
 
-import java.util.ArrayList;
-
 public class Add_Two_Numbers {
 	static class ListNode {
 		int val;
@@ -10,6 +8,10 @@ public class Add_Two_Numbers {
 		ListNode(int x) {
 			val = x;
 			next = null;
+		}
+
+		public String toString() {
+			return val + "";
 		}
 	}
 
@@ -23,54 +25,50 @@ public class Add_Two_Numbers {
 		return head;
 	}
 
+	void print(ListNode node) {
+		while (node != null) {
+			System.out.print(node.val + " ");
+			node = node.next;
+		}
+		System.out.println();
+	}
+
 	public static void main(String[] args) {
-		int[] a1 = { 3 };
-		int[] a2 = {};
+		int[] a1 = { 2, 3 };
+		int[] a2 = { 1, 2, 3 };
 		Add_Two_Numbers creator = new Add_Two_Numbers();
 		ListNode head1 = creator.creatLinkedList(a1);
 		ListNode head2 = creator.creatLinkedList(a2);
 
-		ArrayList<ListNode> lists = new ArrayList<ListNode>();
-		lists.add(head1);
-		lists.add(head2);
-
 		ListNode h = creator.addTwoNumbers(head1, head2);
-		while (h != null) {
-			System.out.print(h.val + " ");
-			h = h.next;
-		}
+		creator.print(h);
 	}
 
 	public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-		if (l1 == null && l2 == null)
-			return null;
-		ListNode head = new ListNode(0); // blank head
-		ListNode cur = head;
-		int c = 0;
+		int carry = 0;
+		ListNode newHead = new ListNode(0);
+		ListNode newNode = newHead;
 		while (l1 != null && l2 != null) {
-			int val = (l1.val + l2.val + c) % 10;
-			c = (l1.val + l2.val + c) / 10;
-			cur.next = new ListNode(val);
-			cur = cur.next;
+			int cur = l1.val + l2.val + carry;
+			newNode = newNode.next = new ListNode(cur % 10);
+			carry = cur / 10;
 			l1 = l1.next;
 			l2 = l2.next;
 		}
 		while (l1 != null) {
-			int val = (l1.val + c) % 10;
-			c = (l1.val + c) / 10;
-			cur.next = new ListNode(val);
-			cur = cur.next;
+			int cur = l1.val + carry;
+			newNode = newNode.next = new ListNode(cur % 10);
+			carry = cur / 10;
 			l1 = l1.next;
 		}
 		while (l2 != null) {
-			int val = (l2.val + c) % 10;
-			c = (l2.val + c) / 10;
-			cur.next = new ListNode(val);
-			cur = cur.next;
+			int cur = l2.val + carry;
+			newNode = newNode.next = new ListNode(cur % 10);
+			carry = cur / 10;
 			l2 = l2.next;
 		}
-		if (c != 0)
-			cur.next = new ListNode(c);
-		return head.next;
+		if (carry != 0)
+			newNode.next = new ListNode(carry);
+		return newHead.next;
 	}
 }

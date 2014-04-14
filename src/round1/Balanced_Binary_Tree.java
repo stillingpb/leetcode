@@ -1,10 +1,9 @@
-package util;
+package round1;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TreeCreator {
-
+public class Balanced_Binary_Tree {
 	static class TreeNode {
 		int val;
 		TreeNode left;
@@ -55,7 +54,28 @@ public class TreeCreator {
 	}
 
 	public static void main(String[] args) {
+		Balanced_Binary_Tree b = new Balanced_Binary_Tree();
+		TreeNode root = b.createTree();
+		System.out.println(b.isBalanced(root));
 	}
 
+	public boolean isBalanced(TreeNode root) {
+		return isBalanced(root, new int[1]);
+	}
 
+	private boolean isBalanced(TreeNode node, int[] deep) {
+		if (node == null) {
+			deep[0] = 0;
+			return true;
+		}
+		int[] leftDeep = new int[1];
+		int[] rightDeep = new int[1];
+		boolean leftBalance = isBalanced(node.left, leftDeep);
+		boolean rightBalance = isBalanced(node.right, rightDeep);
+		if (!leftBalance || !rightBalance
+				|| Math.abs(leftDeep[0] - rightDeep[0]) > 1)
+			return false;
+		deep[0] = Math.max(leftDeep[0], rightDeep[0]) + 1;
+		return true;
+	}
 }

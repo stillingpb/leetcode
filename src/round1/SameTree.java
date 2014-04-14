@@ -1,10 +1,9 @@
-package util;
+package round1;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TreeCreator {
-
+public class SameTree {
 	static class TreeNode {
 		int val;
 		TreeNode left;
@@ -38,24 +37,28 @@ public class TreeCreator {
 		return nodes.get(0);
 	}
 
-	private void intraverse(TreeNode root) {
-		if (root == null)
-			return;
-		intraverse(root.left);
-		System.out.print(root.val + " ");
-		intraverse(root.right);
-	}
-
-	private void pretraverse(TreeNode root) {
+	private void traverse(TreeNode root) {
 		if (root == null)
 			return;
 		System.out.print(root.val + " ");
-		pretraverse(root.left);
-		pretraverse(root.right);
+		traverse(root.left);
+		traverse(root.right);
 	}
 
 	public static void main(String[] args) {
+		SameTree s = new SameTree();
+		TreeNode r1 = s.createTree();
+		TreeNode r2 = s.createTree();
+
+		System.out.println(s.isSameTree(r1, r2));
 	}
 
+	public boolean isSameTree(TreeNode p, TreeNode q) {
+		if (p == null || q == null)
+			return p == null && q == null;
+		if (p.val != q.val)
+			return false;
+		return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
+	}
 
 }

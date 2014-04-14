@@ -1,9 +1,9 @@
-package util;
+package round1;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TreeCreator {
+public class Minimum_Depth_of_Binary_Tree {
 
 	static class TreeNode {
 		int val;
@@ -20,7 +20,7 @@ public class TreeCreator {
 	}
 
 	public TreeNode createTree() {
-		String treeStr = "3,1,5,0,2,4,6,#,#,#,3";
+		String treeStr = "1,2";
 		String[] nstr = treeStr.split(",");
 		List<TreeNode> nodes = new ArrayList<TreeNode>();
 		nodes.add(new TreeNode(Integer.parseInt(nstr[0])));
@@ -55,7 +55,23 @@ public class TreeCreator {
 	}
 
 	public static void main(String[] args) {
+		Minimum_Depth_of_Binary_Tree m = new Minimum_Depth_of_Binary_Tree();
+		TreeNode root = m.createTree();
+		System.out.println(m.minDepth(root));
 	}
 
-
+	public int minDepth(TreeNode node) {
+		if (node == null)
+			return 0;
+		if (node.left == null && node.right == null)
+			return 1;
+		int min = Integer.MAX_VALUE;
+		if (node.left != null)
+			min = minDepth(node.left);
+		if (node.right != null) {
+			int right = minDepth(node.right);
+			min = right < min ? right : min;
+		}
+		return min + 1;
+	}
 }

@@ -1,10 +1,9 @@
-package util;
+package round1;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TreeCreator {
-
+public class Maximum_Depth_of_Binary_Tree {
 	static class TreeNode {
 		int val;
 		TreeNode left;
@@ -38,24 +37,30 @@ public class TreeCreator {
 		return nodes.get(0);
 	}
 
-	private void intraverse(TreeNode root) {
-		if (root == null)
-			return;
-		intraverse(root.left);
-		System.out.print(root.val + " ");
-		intraverse(root.right);
-	}
-
-	private void pretraverse(TreeNode root) {
+	private void traverse(TreeNode root) {
 		if (root == null)
 			return;
 		System.out.print(root.val + " ");
-		pretraverse(root.left);
-		pretraverse(root.right);
+		traverse(root.left);
+		traverse(root.right);
 	}
 
 	public static void main(String[] args) {
+		Maximum_Depth_of_Binary_Tree m = new Maximum_Depth_of_Binary_Tree();
+		TreeNode t = m.createTree();
+		System.out.println(m.maxDepth(t));
 	}
 
+	public int maxDepth(TreeNode root) {
+		return maxDepth(root, 0);
+	}
+
+	private int maxDepth(TreeNode node, int parDeep) {
+		if (node == null)
+			return parDeep;
+		int leftDeep = maxDepth(node.left, parDeep + 1);
+		int rightDeep = maxDepth(node.right, parDeep + 1);
+		return Math.max(leftDeep, rightDeep);
+	}
 
 }

@@ -1,10 +1,9 @@
-package util;
+package round1;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TreeCreator {
-
+public class Path_Sum {
 	static class TreeNode {
 		int val;
 		TreeNode left;
@@ -20,7 +19,7 @@ public class TreeCreator {
 	}
 
 	public TreeNode createTree() {
-		String treeStr = "3,1,5,0,2,4,6,#,#,#,3";
+		String treeStr = "1,2";
 		String[] nstr = treeStr.split(",");
 		List<TreeNode> nodes = new ArrayList<TreeNode>();
 		nodes.add(new TreeNode(Integer.parseInt(nstr[0])));
@@ -55,7 +54,19 @@ public class TreeCreator {
 	}
 
 	public static void main(String[] args) {
+		Path_Sum p = new Path_Sum();
+		TreeNode root = p.createTree();
+		System.out.println(p.hasPathSum(root, 1));
+		System.out.println(p.hasPathSum(root, 3));
 	}
 
+	public boolean hasPathSum(TreeNode root, int sum) {
+		if (root == null)
+			return false;
+		if (root.left == null && root.right == null)
+			return sum == root.val;
+		return hasPathSum(root.left, sum - root.val)
+				|| hasPathSum(root.right, sum - root.val);
+	}
 
 }

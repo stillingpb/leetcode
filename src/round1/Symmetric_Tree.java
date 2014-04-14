@@ -1,10 +1,9 @@
-package util;
+package round1;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TreeCreator {
-
+public class Symmetric_Tree {
 	static class TreeNode {
 		int val;
 		TreeNode left;
@@ -19,8 +18,7 @@ public class TreeCreator {
 		}
 	}
 
-	public TreeNode createTree() {
-		String treeStr = "3,1,5,0,2,4,6,#,#,#,3";
+	public TreeNode createTree(String treeStr) {
 		String[] nstr = treeStr.split(",");
 		List<TreeNode> nodes = new ArrayList<TreeNode>();
 		nodes.add(new TreeNode(Integer.parseInt(nstr[0])));
@@ -38,24 +36,22 @@ public class TreeCreator {
 		return nodes.get(0);
 	}
 
-	private void intraverse(TreeNode root) {
-		if (root == null)
-			return;
-		intraverse(root.left);
-		System.out.print(root.val + " ");
-		intraverse(root.right);
-	}
-
-	private void pretraverse(TreeNode root) {
-		if (root == null)
-			return;
-		System.out.print(root.val + " ");
-		pretraverse(root.left);
-		pretraverse(root.right);
-	}
-
 	public static void main(String[] args) {
+		Symmetric_Tree s = new Symmetric_Tree();
+		TreeNode r1 = s.createTree("1,2,2,3,4,4,3");
+		System.out.println(s.isSymmetric(r1));
 	}
 
+	public boolean isSymmetric(TreeNode root) {
+		return isSymmetric(root,root);
+	}
 
+	private boolean isSymmetric(TreeNode left, TreeNode right) {
+		if (left == null || right == null)
+			return left == null && right == null;
+		if (left.val != right.val)
+			return false;
+		return isSymmetric(left.left, right.right)
+				&& isSymmetric(left.right, right.left);
+	}
 }

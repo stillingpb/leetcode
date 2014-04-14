@@ -11,6 +11,9 @@ public class LinkedListCreator {
 			val = x;
 			next = null;
 		}
+		public String toString(){
+			return val+"";
+		}
 	}
 
 	ListNode creatLinkedList(int[] a) {
@@ -21,6 +24,14 @@ public class LinkedListCreator {
 			head = node;
 		}
 		return head;
+	}
+	
+	void print(ListNode node){
+		while(node != null){
+			System.out.print(node.val+" ");
+			node = node.next;
+		}
+		System.out.println();
 	}
 
 	public static void main(String[] args) {
@@ -36,5 +47,7 @@ public class LinkedListCreator {
 		lists.add(head1);
 		lists.add(head2);
 		lists.add(head3);
+		
+		creator.print(head1);
 	}
 }

@@ -1,10 +1,9 @@
-package util;
+package round1;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TreeCreator {
-
+public class Path_Sum_II {
 	static class TreeNode {
 		int val;
 		TreeNode left;
@@ -20,7 +19,7 @@ public class TreeCreator {
 	}
 
 	public TreeNode createTree() {
-		String treeStr = "3,1,5,0,2,4,6,#,#,#,3";
+		String treeStr = "5,4,8,11,#,13,4,7,2,#,#,5,1";
 		String[] nstr = treeStr.split(",");
 		List<TreeNode> nodes = new ArrayList<TreeNode>();
 		nodes.add(new TreeNode(Integer.parseInt(nstr[0])));
@@ -55,7 +54,36 @@ public class TreeCreator {
 	}
 
 	public static void main(String[] args) {
+		Path_Sum_II p = new Path_Sum_II();
+		TreeNode root = p.createTree();
+		
+		System.out.println(p.pathSum(root, 22));
 	}
 
+	public ArrayList<ArrayList<Integer>> pathSum(TreeNode root, int sum) {
+		ArrayList<ArrayList<Integer>> ans = new ArrayList<ArrayList<Integer>>();
+		if (root == null)
+			return ans;
+		ArrayList<Integer> path = new ArrayList<Integer>();
+		pathSum(ans, path, root, sum);
+		return ans;
+	}
 
+	private void pathSum(ArrayList<ArrayList<Integer>> ans,
+			ArrayList<Integer> path, TreeNode node, int sum) {
+		path.add(node.val);
+		if (node.left == null && node.right == null) {
+			if (sum - node.val == 0) {
+				ArrayList<Integer> list = new ArrayList<Integer>(path);
+				ans.add(list);
+			}
+			path.remove(path.size() - 1);
+			return;
+		}
+		if (node.left != null)
+			pathSum(ans, path, node.left, sum - node.val);
+		if (node.right != null)
+			pathSum(ans, path, node.right, sum - node.val);
+		path.remove(path.size() - 1);
+	}
 }
