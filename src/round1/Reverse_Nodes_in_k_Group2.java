@@ -1,7 +1,5 @@
 package round1;
 
-import round2.Reverse_Nodes_in_k_Group.ListNode;
-
 public class Reverse_Nodes_in_k_Group2 {
 	static class ListNode {
 		int val;
