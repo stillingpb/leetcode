@@ -1,5 +1,7 @@
 package round1;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
 
 public class Flatten_Binary_Tree_to_Linked_List {
@@ -11,40 +13,49 @@ public class Flatten_Binary_Tree_to_Linked_List {
 		TreeNode(int x) {
 			val = x;
 		}
+
+		public String toString() {
+			return val + "";
+		}
 	}
 
 	public TreeNode createTree() {
-		TreeNode t1 = new TreeNode(1);
-		TreeNode t2 = new TreeNode(2);
-		TreeNode t3 = new TreeNode(3);
-		TreeNode t4 = new TreeNode(4);
-		TreeNode t5 = new TreeNode(5);
+		String treeStr = "1,2,5,3,4,#,6";
+		String[] nstr = treeStr.split(",");
+		List<TreeNode> nodes = new ArrayList<TreeNode>();
+		nodes.add(new TreeNode(Integer.parseInt(nstr[0])));
+		for (int i = 1, count = 0; i < nstr.length; i++, count++) {
+			if ("#".equals(nstr[i]))
+				continue;
+			TreeNode newNode = new TreeNode(Integer.parseInt(nstr[i]));
+			nodes.add(newNode);
+			TreeNode par = nodes.get(count / 2);
+			if (count % 2 == 0)
+				par.left = newNode;
+			else
+				par.right = newNode;
+		}
+		return nodes.get(0);
+	}
 
-		t1.left = t2;
-		t1.right = t3;
-		t2.right = t4;
-		t3.left = t5;
-		return t1;
+	private void intraverse(TreeNode root) {
+		if (root == null)
+			return;
+		intraverse(root.left);
+		System.out.print(root.val + " ");
+		intraverse(root.right);
 	}
 
 	public static void main(String[] args) {
-		Flatten_Binary_Tree_to_Linked_List obj = new Flatten_Binary_Tree_to_Linked_List();
-		TreeNode root = obj.createTree();
-
-		obj.flatten(null);
-
-		// TreeNode node = root;
-		// while (node != null) {
-		// System.out.println(node.val);
-		// if(node.left != null)
-		// System.out.println("error");
-		// node = node.right;
-		// }
+		Flatten_Binary_Tree_to_Linked_List f = new Flatten_Binary_Tree_to_Linked_List();
+		TreeNode root = f.createTree();
+		f.flatten(root);
+		f.intraverse(root);
 	}
 
 	public void flatten(TreeNode root) {
 		Stack<TreeNode> stack = new Stack<TreeNode>();
-		preOrderTraverse(root, stack);
+		preTraverse(root, stack);
 		TreeNode pre = null;
 		while (!stack.isEmpty()) {
 			TreeNode cur = stack.pop();
@@ -54,11 +65,11 @@ public class Flatten_Binary_Tree_to_Linked_List {
 		}
 	}
 
-	private void preOrderTraverse(TreeNode node, Stack<TreeNode> stack) {
+	private void preTraverse(TreeNode node, Stack<TreeNode> stack) {
 		if (node == null)
 			return;
 		stack.push(node);
-		preOrderTraverse(node.left, stack);
-		preOrderTraverse(node.right, stack);
+		preTraverse(node.left, stack);
+		preTraverse(node.right, stack);
 	}
 }

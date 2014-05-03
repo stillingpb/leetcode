@@ -1,22 +1,17 @@
 package round1;
 
 public class Remove_Element {
-
 	public static void main(String[] args) {
 		Remove_Element r = new Remove_Element();
-		int A[] = new int[] { 1 };
-		int ans = r.removeElement(A, 2);
-		for (int i = 0; i < ans; i++)
-			System.out.print(A[i]);
+		System.out.println(r
+				.removeElement(new int[] { 1, 2, 2, 3, 4, 2, 2 }, 2));
 	}
 
 	public int removeElement(int[] A, int elem) {
-		int curIndex = 0;
-		for (int i = 0; i < A.length; i++) {
-			if (A[i] != elem) {
-				A[curIndex++] = A[i];
-			}
-		}
-		return curIndex;
+		int pos = 0;
+		for (int i = 0; i < A.length; i++)
+			if (A[i] != elem)
+				A[pos++] = A[i];
+		return pos;
 	}
 }

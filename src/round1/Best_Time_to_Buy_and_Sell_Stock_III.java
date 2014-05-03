@@ -1,48 +1,30 @@
 package round1;
 
-/**
- * wrong answer
- * @author pb
- *
- */
 public class Best_Time_to_Buy_and_Sell_Stock_III {
 	public static void main(String[] args) {
-//		System.out.println(new Best_Time_to_Buy_and_Sell_Stock_III()
-//				.maxProfit(new int[] { 2, 2, 3, 25, 1, 6, 3, 2, 7 }));
+		Best_Time_to_Buy_and_Sell_Stock_III b = new Best_Time_to_Buy_and_Sell_Stock_III();
+		System.out.println(b.maxProfit(new int[] { 6, 1, 3, 2, 5, 7 }));
 	}
 
-//	public int maxProfit(int[] prices) {
-//		int firstProfit = maxProfit(prices, 0, prices.length);
-//
-//		int leftProfit = maxProfit(prices, 0, left);
-//		int rightProfit = maxProfit(prices, right + 1, prices.length - right
-//				- 1);
-//		int secondProfit = leftProfit > rightProfit ? leftProfit : rightProfit;
-//		return firstProfit + secondProfit;
-//	}
-//
-//	private int left;
-//	private int right;
-//
-//	private int maxProfit(int[] prices, int offset, int len) {
-//		if (len <= 1)
-//			return 0;
-//		int maxProfit = Integer.MIN_VALUE;
-//		int buyPrice = prices[offset];
-//		int leftTmp = offset;
-//
-//		for (int i = offset + 1; i < offset + len; i++) {
-//			int profit = prices[i] - buyPrice;
-//			if (profit >= maxProfit) {
-//				maxProfit = profit;
-//				left = leftTmp;
-//				right = i;
-//			}
-//			if (buyPrice >= prices[i]) {
-//				buyPrice = prices[i];
-//				leftTmp = i;
-//			}
-//		}
-//		return maxProfit > 0 ? maxProfit : 0;
-//	}
+	public int maxProfit(int[] prices) {
+		if (prices.length == 0) {
+			return 0;
+		}
+		int len = prices.length;
+		int[] profit = new int[len];
+		int minPrice = prices[0];
+		for (int i = 1; i < len; i++) {
+			if (minPrice > prices[i])
+				minPrice = prices[i];
+			profit[i] = Math.max(profit[i - 1], prices[i] - minPrice);
+		}
+		int maxProfit = profit[len - 1];
+		int maxPrice = prices[len - 1];
+		for (int i = len - 2; i >= 0; i--) {
+			if (maxPrice < prices[i])
+				maxPrice = prices[i];
+			maxProfit = Math.max(maxProfit, maxPrice - prices[i] + profit[i]);
+		}
+		return maxProfit;
+	}
 }

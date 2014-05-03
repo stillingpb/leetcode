@@ -1,36 +1,34 @@
 package round1;
 
 public class Add_Binary {
+
 	public static void main(String[] args) {
-		System.out.println(new Add_Binary().addBinary("10", "0"));
+		Add_Binary a = new Add_Binary();
+		System.out.println(a.addBinary("1", "111"));
 	}
 
 	public String addBinary(String a, String b) {
-		StringBuilder ans = new StringBuilder();
-		int lena = a.length();
-		int lenb = b.length();
+		StringBuilder sb = new StringBuilder();
+		int i = a.length() - 1;
+		int j = b.length() - 1;
 		int carry = 0;
-		int i = 0;
-		for (; i < lena && i < lenb; i++) {
-			int inta = a.charAt(lena - i - 1) - '0';
-			int intb = b.charAt(lenb - i - 1) - '0';
-			ans.insert(0, (inta + intb + carry) % 2);
-			carry = (inta + intb + carry) / 2;
+		while (i >= 0 && j >= 0) {
+			int temp = carry + a.charAt(i--) + b.charAt(j--) - '0' - '0';
+			carry = temp / 2;
+			sb.insert(0, temp % 2);
 		}
-		while (i < lena) {
-			int inta = a.charAt(lena - i - 1) - '0';
-			ans.insert(0, (inta + carry) % 2);
-			carry = (inta + carry) / 2;
-			i++;
+		while (i >= 0) {
+			int temp = carry + a.charAt(i--) - '0';
+			carry = temp / 2;
+			sb.insert(0, temp % 2);
 		}
-		while (i < lenb) {
-			int intb = b.charAt(lenb - i - 1) - '0';
-			ans.insert(0, (intb + carry) % 2);
-			carry = (intb + carry) / 2;
-			i++;
+		while (j >= 0) {
+			int temp = carry + b.charAt(j--) - '0';
+			carry = temp / 2;
+			sb.insert(0, temp % 2);
 		}
-		if (carry != 0)
-			ans.insert(0, carry);
-		return ans.toString();
+		if (carry > 0)
+			sb.insert(0, carry);
+		return sb.toString();
 	}
 }

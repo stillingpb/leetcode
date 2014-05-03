@@ -1,20 +1,20 @@
 package round1;
 
 public class Maximum_Subarray {
+
 	public static void main(String[] args) {
-		int A[] = new int[] { -2, 1, -3, 4, -1, 2, 1, -5, 4 };
-		int ret = new Maximum_Subarray().maxSubArray(A);
-		System.out.println(ret);
+		int[] A = { -2, 1, -3, 4, -1, 2, 1, -5, 4 };
+		Maximum_Subarray m = new Maximum_Subarray();
+		System.out.println(m.maxSubArray(A));
 	}
 
 	public int maxSubArray(int[] A) {
-		int ret = Integer.MIN_VALUE;
-		int sum = 0;
+		int max = Integer.MIN_VALUE;
+		int cur = -1;
 		for (int i = 0; i < A.length; i++) {
-			sum = Math.max(sum + A[i], A[i]);
-			ret = Math.max(sum, ret);
+			cur = cur <= 0 ? A[i] : A[i] + cur;
+			max = Math.max(max, cur);
 		}
-		return ret;
+		return max;
 	}
-
 }

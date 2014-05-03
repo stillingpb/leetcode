@@ -1,9 +1,6 @@
 package round1;
 
-import round1.Remove_Nth_Node_From_End_of_List.ListNode;
-
 public class Rotate_List {
-
 	static class ListNode {
 		int val;
 		ListNode next;
@@ -14,7 +11,7 @@ public class Rotate_List {
 		}
 
 		public String toString() {
-			return "" + val;
+			return val + "";
 		}
 	}
 
@@ -28,41 +25,41 @@ public class Rotate_List {
 		return head;
 	}
 
-	public static void main(String[] args) {
-		int[] a1 = {1,2,3};
-		Rotate_List creator = new Rotate_List();
-		ListNode head1 = creator.creatLinkedList(a1);
-
-		head1 = creator.rotateRight(head1, 5);
-		ListNode p = head1;
-		while (p != null) {
-			System.out.print(p.val + " ");
-			p = p.next;
+	void print(ListNode node) {
+		while (node != null) {
+			System.out.print(node.val + " ");
+			node = node.next;
 		}
+		System.out.println();
+	}
+
+	public static void main(String[] args) {
+		int[] a1 = { 1, 2, 3, 4, 5 };
+		Rotate_List r = new Rotate_List();
+		ListNode head = r.creatLinkedList(a1);
+		head = r.rotateRight(head, 7);
+		r.print(head);
 	}
 
 	public ListNode rotateRight(ListNode head, int n) {
-		if (head == null || head.next == null)
+		int len = 0;
+		ListNode node = head;
+		for (; node != null; len++)
+			node = node.next;
+		ListNode fast = head;
+		n = n % len;
+		for (int i = 0; i < n && fast != null; i++)
+			fast = fast.next;
+		if (fast == null)
 			return head;
-		ListNode p = head;
-		int count = 0;
-		while (p != null) {
-			count++;
-			p = p.next;
+		ListNode slow = head;
+		while (fast.next != null) {
+			fast = fast.next;
+			slow = slow.next;
 		}
-		int site = count - n % count - 1;
-		p = head;
-		for (int i = 0; i < site; i++) {
-			p = p.next;
-		}
-		ListNode mid = p;
-		while (p.next != null)
-			p = p.next;
-		ListNode last = p;
-		last.next = head;
-		head = mid.next;
-		mid.next = null;
+		fast.next = head;
+		head = slow.next;
+		slow.next = null;
 		return head;
 	}
-
 }

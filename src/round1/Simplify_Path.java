@@ -5,28 +5,28 @@ import java.util.Stack;
 public class Simplify_Path {
 
 	public static void main(String[] args) {
-//		String test = "/home//foo/";
-		String test = "/a/./b/../../c";
-		test = new Simplify_Path().simplifyPath(test);
-		System.out.println(test);
-
+		Simplify_Path s = new Simplify_Path();
+		System.out.println(s.simplifyPath("/home/"));
+		System.out.println(s.simplifyPath("/a/./b/../../c/"));
+		System.out.println(s.simplifyPath("/../"));
+		System.out.println(s.simplifyPath("/home//foo/"));
 	}
 
 	public String simplifyPath(String path) {
 		Stack<String> stack = new Stack<String>();
-		String[] splitStr = path.split("/");
-		for (String str : splitStr) {
-			if (".".equals(str) || "".equals(str))
+		String[] strs = path.split("/");
+		for (String p : strs) {
+			if ("".equals(p) || ".".equals(p))
 				continue;
-			else if ("..".equals(str)) {
+			else if ("..".equals(p)) {
 				if (!stack.isEmpty())
 					stack.pop();
 			} else
-				stack.push(str);
+				stack.push(p);
 		}
 		StringBuilder sb = new StringBuilder();
-		for (String s : stack)
-			sb.append('/').append(s);
-		return sb.length() == 0 ? "/" : sb.toString();
+		for (String p : stack)
+			sb.append('/').append(p);
+		return stack.isEmpty() ? "/" : sb.toString();
 	}
 }

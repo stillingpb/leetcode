@@ -1,8 +1,6 @@
 package round1;
 
-
 public class Remove_Nth_Node_From_End_of_List {
-
 	static class ListNode {
 		int val;
 		ListNode next;
@@ -13,7 +11,7 @@ public class Remove_Nth_Node_From_End_of_List {
 		}
 
 		public String toString() {
-			return "" + val;
+			return val + "";
 		}
 	}
 
@@ -27,34 +25,35 @@ public class Remove_Nth_Node_From_End_of_List {
 		return head;
 	}
 
-	public static void main(String[] args) {
-		int[] a1 = { 1, 2, 3, 4, 5 };
-		Remove_Nth_Node_From_End_of_List creator = new Remove_Nth_Node_From_End_of_List();
-		ListNode head1 = creator.creatLinkedList(a1);
-
-		head1 = creator.removeNthFromEnd(head1, 4);
-		ListNode p = head1;
-		while (p != null) {
-			System.out.print(p.val + " ");
-			p = p.next;
+	void print(ListNode node) {
+		while (node != null) {
+			System.out.print(node.val + " ");
+			node = node.next;
 		}
+		System.out.println();
+	}
+
+	public static void main(String[] args) {
+		Remove_Nth_Node_From_End_of_List r = new Remove_Nth_Node_From_End_of_List();
+		int[] a1 = { 1, 2, 3, 4, 5 };
+		ListNode head = r.creatLinkedList(a1);
+		head = r.removeNthFromEnd(head, 1);
+		r.print(head);
 	}
 
 	public ListNode removeNthFromEnd(ListNode head, int n) {
 		ListNode fast = head;
-		while (n > 0) {
+		int i = 0;
+		while (i++ < n)
 			fast = fast.next;
-			n--;
-		}
-		if (fast == null)
-			return head.next;
-		fast = fast.next;
-		ListNode slow = head;
+		ListNode newHead = new ListNode(0);
+		ListNode slow = newHead;
+		slow.next = head;
 		while (fast != null) {
-			slow = slow.next;
 			fast = fast.next;
+			slow = slow.next;
 		}
 		slow.next = slow.next.next;
-		return head;
+		return newHead.next;
 	}
 }

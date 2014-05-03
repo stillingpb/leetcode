@@ -1,21 +1,21 @@
 package round1;
 
 public class Climbing_Stairs {
+
 	public static void main(String[] args) {
-		int n = new Climbing_Stairs().climbStairs(1000);
-		System.out.println(n);
+		Climbing_Stairs c = new Climbing_Stairs()
+		;
+		System.out.println(c.climbStairs(4));
 	}
 
 	public int climbStairs(int n) {
-		if (n <= 2)
-			return n;
-		int f1 = 1;
-		int f2 = 2;
-		for (int i = 3; i <= n; i++) {
-			int temp = f1 + f2;
-			f1 = f2;
-			f2 = temp;
+		int n1 = 1;
+		int n2 = 1;
+		for (int i = 2; i <= n; i++) {
+			int temp = n1 + n2;
+			n1 = n2;
+			n2 = temp;
 		}
-		return f2;
+		return n2;
 	}
 }

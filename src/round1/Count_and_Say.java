@@ -3,28 +3,25 @@ package round1;
 public class Count_and_Say {
 
 	public static void main(String[] args) {
-		Count_and_Say cs = new Count_and_Say();
-		String str = cs.countAndSay(1);
-		System.out.println(str);
+		System.out.println(new Count_and_Say().countAndSay(5));
 	}
 
 	public String countAndSay(int n) {
 		String cur = "1";
 		for (int i = 1; i < n; i++) {
 			StringBuilder sb = new StringBuilder();
-			char curChar = cur.charAt(0);
 			int count = 1;
+			char ch = cur.charAt(0);
 			for (int j = 1, len = cur.length(); j < len; j++) {
-				char ch = cur.charAt(j);
-				if (curChar == ch) {
+				if (ch == cur.charAt(j))
 					count++;
-				} else {
-					sb.append(count).append(curChar);
-					curChar = ch;
+				else {
+					sb.append(count).append(ch);
+					ch = cur.charAt(j);
 					count = 1;
 				}
 			}
-			sb.append(count).append(curChar);
+			sb.append(count).append(ch);
 			cur = sb.toString();
 		}
 		return cur;

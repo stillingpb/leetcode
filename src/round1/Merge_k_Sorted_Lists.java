@@ -1,9 +1,10 @@
 package round1;
 
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.PriorityQueue;
 
 public class Merge_k_Sorted_Lists {
-
 	static class ListNode {
 		int val;
 		ListNode next;
@@ -11,6 +12,10 @@ public class Merge_k_Sorted_Lists {
 		ListNode(int x) {
 			val = x;
 			next = null;
+		}
+
+		public String toString() {
+			return val + "";
 		}
 	}
 
@@ -24,55 +29,51 @@ public class Merge_k_Sorted_Lists {
 		return head;
 	}
 
+	void print(ListNode node) {
+		while (node != null) {
+			System.out.print(node.val + " ");
+			node = node.next;
+		}
+		System.out.println();
+	}
+
 	public static void main(String[] args) {
-		int[] a1 = { 1, 2, 3, 4, 5 };
-		int[] a2 = { 2, 3, 4, 4, 6 };
-		int[] a3 = { 6, 7, 8, 9 };
+		int[] a1 = { 1 };
+		int[] a2 = { 2, 6 };
+		int[] a3 = { 6, 7 };
 		Merge_k_Sorted_Lists creator = new Merge_k_Sorted_Lists();
 		ListNode head1 = creator.creatLinkedList(a1);
 		ListNode head2 = creator.creatLinkedList(a2);
 		ListNode head3 = creator.creatLinkedList(a3);
 
 		ArrayList<ListNode> lists = new ArrayList<ListNode>();
-		lists.add(head1);
-		lists.add(head2);
-		lists.add(head3);
-
-		ListNode h = creator.mergeKLists(lists);
-		while (h != null) {
-			System.out.print(h.val + " ");
-			h = h.next;
-		}
+//		lists.add(head1);
+//		lists.add(head2);
+//		lists.add(head3);
+		ListNode head = creator.mergeKLists(lists);
+		creator.print(head);
 	}
 
 	public ListNode mergeKLists(ArrayList<ListNode> lists) {
-		ListNode head = getMin(lists);
-		ListNode cur = head;
-		while (!lists.isEmpty()) {
-			cur.next = getMin(lists);
-			cur = cur.next;
+		PriorityQueue<ListNode> prioQueue = new PriorityQueue<ListNode>(
+				10, new Comparator<ListNode>() {
+					@Override
+					public int compare(ListNode n1, ListNode n2) {
+						return n1.val - n2.val;
+					}
+				});
+		for (ListNode node : lists)
+			if (node != null)
+				prioQueue.offer(node);
+		ListNode newHead = new ListNode(0);
+		ListNode cur = newHead;
+		while (!prioQueue.isEmpty()) {
+			ListNode top = prioQueue.poll();
+			cur.next = top;
+			cur = top;
+			if (top.next != null)
+				prioQueue.offer(top.next);
 		}
-		return head;
-	}
-
-	private ListNode getMin(ArrayList<ListNode> lists) {
-		int min = Integer.MAX_VALUE;
-		int index = 0;
-		for (int i = 0; i < lists.size(); i++) {
-			if (lists.get(i) == null) {
-				lists.remove(i);
-				i--;
-				continue;
-			}
-			if (lists.get(i).val < min) {
-				min = lists.get(i).val;
-				index = i;
-			}
-		}
-		if (lists.size() == 0)
-			return null;
-		ListNode node = lists.get(index);
-		lists.set(index, node.next);
-		return node;
+		return newHead.next;
 	}
 }
