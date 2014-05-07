@@ -1,7 +1,5 @@
 package round1;
 
-import java.util.ArrayList;
-
 public class Remove_Duplicates_from_Sorted_List_II {
 	static class ListNode {
 		int val;
@@ -10,6 +8,10 @@ public class Remove_Duplicates_from_Sorted_List_II {
 		ListNode(int x) {
 			val = x;
 			next = null;
+		}
+
+		public String toString() {
+			return val + "";
 		}
 	}
 
@@ -32,45 +34,31 @@ public class Remove_Duplicates_from_Sorted_List_II {
 	}
 
 	public static void main(String[] args) {
-		int[] a1 = { 1, 2, 2, 3, 4, 4, 5, 5 };
-		Remove_Duplicates_from_Sorted_List_II creator = new Remove_Duplicates_from_Sorted_List_II();
-		ListNode head1 = creator.creatLinkedList(a1);
-
-		ListNode head = creator.deleteDuplicates(head1);
-		creator.print(head);
+		int[] a1 = { 1, 1, 2, 2, 3, 3, 3, 4, 4, 5, 5 };
+		Remove_Duplicates_from_Sorted_List_II r = new Remove_Duplicates_from_Sorted_List_II();
+		ListNode head = r.creatLinkedList(a1);
+		head = r.deleteDuplicates(head);
+		r.print(head);
 	}
 
 	public ListNode deleteDuplicates(ListNode head) {
-		if (head == null || head.next == null)
-			return head;
 		ListNode newHead = new ListNode(0);
 		newHead.next = head;
-		ListNode newEnd = newHead;
-
-		boolean isSingle = true;
-		ListNode single = head;
-		int curVal = head.val;
-		ListNode node = head.next;
-
-		while (node != null) {
-			if (curVal == node.val) {
+		ListNode node = newHead;
+		ListNode p2 = node.next;
+		while (p2 != null) {
+			boolean isSingle = true;
+			int val = p2.val;
+			while (p2.next != null && p2.next.val == val) {
+				p2 = p2.next;
 				isSingle = false;
-			} else {
-				if (isSingle) {
-					newEnd.next = single;
-					newEnd = single;
-				}
-				curVal = node.val;
-				isSingle = true;
-				single = node;
 			}
-			node = node.next;
+			if (isSingle)
+				node = p2;
+			else
+				node.next = p2.next;
+			p2 = p2.next;
 		}
-		if (isSingle) {
-			newEnd.next = single;
-		} else
-			newEnd.next = null;
 		return newHead.next;
 	}
-
 }

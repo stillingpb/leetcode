@@ -1,6 +1,5 @@
 package round1;
 
-
 public class Partition_List {
 	static class ListNode {
 		int val;
@@ -9,6 +8,10 @@ public class Partition_List {
 		ListNode(int x) {
 			val = x;
 			next = null;
+		}
+
+		public String toString() {
+			return val + "";
 		}
 	}
 
@@ -31,34 +34,31 @@ public class Partition_List {
 	}
 
 	public static void main(String[] args) {
-		int[] a1 = {3,2,2,1,3,1 };
-		Partition_List creator = new Partition_List();
-		ListNode head1 = creator.creatLinkedList(a1);
-
-		ListNode par = creator.partition(head1, 2);
-		creator.print(par);
+		int[] a1 = { 5,4,3,2,1 };
+		Partition_List p = new Partition_List();
+		ListNode head = p.creatLinkedList(a1);
+		head = p.partition(head, -1);
+		p.print(head);
 	}
 
-	ListNode partition(ListNode head, int x) {
-		ListNode lessHead = new ListNode(0);
-		ListNode greatHead = new ListNode(0);
-
-		ListNode lessNode = lessHead;
-		ListNode greatNode = greatHead;
-
+	public ListNode partition(ListNode head, int x) {
+		ListNode smallHead = new ListNode(0);
+		ListNode bigHead = new ListNode(0);
+		ListNode small = smallHead;
+		ListNode big = bigHead;
 		ListNode node = head;
 		while (node != null) {
 			if (node.val < x) {
-				lessNode.next = node;
-				lessNode = node;
+				small.next = node;
+				small = node;
 			} else {
-				greatNode.next = node;
-				greatNode = node;
+				big.next = node;
+				big = node;
 			}
 			node = node.next;
 		}
-		lessNode.next = greatHead.next;
-		greatNode.next = null;
-		return lessHead.next;
+		big.next = null;
+		small.next = bigHead.next;
+		return smallHead.next;
 	}
 }

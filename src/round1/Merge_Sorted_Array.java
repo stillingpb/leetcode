@@ -1,32 +1,27 @@
 package round1;
 
-//Merge Sorted Array
 public class Merge_Sorted_Array {
 
 	public static void main(String[] args) {
 		Merge_Sorted_Array m = new Merge_Sorted_Array();
-		int[] a = new int[]{1,2,3,0,0,0};
-		m.merge(a, 3, new int[]{0,2,4}, 3);
-		for(int i : a)
-			System.out.print(i+" ");
+		int A[] = { 1, 2, 3, 4, 1, 1, 1, 1 };
+		int B[] = { 2, 3, 4, 5 };
+		m.merge(A, 4, B, 4);
+		for (int i = 0; i < A.length; i++)
+			System.out.print(A[i] + " ");
 	}
 
 	public void merge(int A[], int m, int B[], int n) {
-		int ai = m - 1;
-		int bi = n - 1;
-		int i = m + n - 1;
-		while (ai >= 0 && bi >= 0) {
-			if (A[ai] > B[bi]) {
-				A[i--] = A[ai--];
-			} else {
-				A[i--] = B[bi--];
-			}
+		int i = m - 1;
+		int j = n - 1;
+		int k = m + n - 1;
+		while (i >= 0 && j >= 0) {
+			if (A[i] > B[j])
+				A[k--] = A[i--];
+			else
+				A[k--] = B[j--];
 		}
-		while (ai >= 0) {
-			A[i--] = A[ai--];
-		}
-		while (bi >= 0) {
-			A[i--] = B[bi--];
-		}
+		while(j>=0)
+			A[k--] = B[j--];
 	}
 }

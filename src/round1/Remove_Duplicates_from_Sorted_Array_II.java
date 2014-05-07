@@ -3,29 +3,27 @@ package round1;
 public class Remove_Duplicates_from_Sorted_Array_II {
 
 	public static void main(String[] args) {
+		int[] a1 = { 1,1,1,2,2,3,3,3,4,4,5};
 		Remove_Duplicates_from_Sorted_Array_II r = new Remove_Duplicates_from_Sorted_Array_II();
-		int[] A = new int[] { 1, 1, 1, 1,2, 3, 3 ,4};
-		int ans = r.removeDuplicates(A);
-		for (int i = 0; i < ans; i++)
-			System.out.print(A[i]);
+		int len = r.removeDuplicates(a1);
+		System.out.println(len);
+		for (int i = 0; i < len; i++)
+			System.out.print(a1[i] + " ");
 	}
 
 	public int removeDuplicates(int[] A) {
-		if (A.length == 0)
-			return 0;
+		int cur = Integer.MAX_VALUE;
 		int times = 1;
-		int curIndex = 0;
-		for (int i = 1; i < A.length; i++) {
-			if (A[curIndex] == A[i]) {
-				times++;
-				if (times <= 2) {
-					A[++curIndex] = A[i];
-				}
-			} else {
+		int pos = 0;
+		for (int i = 0; i < A.length; i++) {
+			if (A[i] != cur) {
+				cur = A[i];
 				times = 1;
-				A[++curIndex] = A[i];
 			}
+			if (times < 3)
+				A[pos++] = A[i];
+			times++;
 		}
-		return curIndex + 1;
+		return pos;
 	}
 }
