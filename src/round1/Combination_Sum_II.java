@@ -2,42 +2,44 @@ package round1;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class Combination_Sum_II {
 
-	public static void main(String[] args) {
-		Combination_Sum_II c = new Combination_Sum_II();
-		ArrayList<ArrayList<Integer>> ans = c.combinationSum2(new int[] { 10,
-				1, 2, 7, 6, 1, 5 }, 8);
-		System.out.println(ans);
-	}
+    public static void main(String[] args) {
+        Combination_Sum_II c = new Combination_Sum_II();
+        List<List<Integer>> ans = c.combinationSum2(new int[]{1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3}, 4);
+        System.out.println(ans);
+    }
 
-	public ArrayList<ArrayList<Integer>> combinationSum2(int[] num, int target) {
-		Arrays.sort(num);
-		ArrayList<ArrayList<Integer>> ans = new ArrayList<ArrayList<Integer>>();
-		int[] count = new int[num.length];
-		combinationSum2(ans, num, target, count, num.length - 1);
-		return ans;
-	}
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        List<List<Integer>> ans = new ArrayList<>();
+        Arrays.sort(candidates);
+        combinationSum2(ans, candidates, target, 0, new ArrayList<Integer>());
+        return ans;
+    }
 
-	private void combinationSum2(ArrayList<ArrayList<Integer>> ans, int[] num,
-			int target, int[] count, int level) {
-		if (target == 0) {
-			ArrayList<Integer> list = new ArrayList<Integer>();
-			for (int i = 0; i < count.length; i++)
-				if (count[i] == 1)
-					list.add(num[i]);
-			ans.add(list);
-			return;
-		}
-		if (level < 0)
-			return;
-		if (num[level] <= target
-				&& (level == num.length - 1 || num[level] != num[level + 1] || count[level + 1] == 1)) {
-			count[level] = 1;
-			combinationSum2(ans, num, target - num[level], count, level - 1);
-			count[level] = 0;
-		}
-		combinationSum2(ans, num, target, count, level - 1);
-	}
+    private void combinationSum2(List<List<Integer>> ans, int[] candidates,
+                                 int target, int level, ArrayList<Integer> list) {
+        if (target == 0) {
+            ans.add((ArrayList<Integer>) list.clone());
+            return;
+        }
+        if (level >= candidates.length || candidates[level] > target) {
+            return;
+        } else {
+            list.add(candidates[level]);
+            combinationSum2(ans, candidates, target - candidates[level], level + 1, list);
+            list.remove(list.size() - 1);
+        }
+        for (int i = level + 1; i < candidates.length; i++) {
+            if (candidates[i] == candidates[i - 1])
+                continue;
+            if (candidates[i] > target)
+                return;
+            list.add(candidates[i]);
+            combinationSum2(ans, candidates, target - candidates[i], i + 1, list);
+            list.remove(list.size() - 1);
+        }
+    }
 }
