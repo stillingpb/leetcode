@@ -23,10 +23,7 @@ public class Combination_Sum {
             ans.add((ArrayList) list.clone());
             return;
         }
-        for (int i = level; i < candidates.length; i++) {
-            if (candidates[i] > target) {
-                return;
-            }
+        for (int i = level; i < candidates.length && candidates[i] <= target; i++) {
             list.add(candidates[i]);
             combinationSum(ans, candidates, target - candidates[i], list, i);
             list.remove(list.size() - 1);

@@ -25,18 +25,9 @@ public class Combination_Sum_II {
             ans.add((ArrayList<Integer>) list.clone());
             return;
         }
-        if (level >= candidates.length || candidates[level] > target) {
-            return;
-        } else {
-            list.add(candidates[level]);
-            combinationSum2(ans, candidates, target - candidates[level], level + 1, list);
-            list.remove(list.size() - 1);
-        }
-        for (int i = level + 1; i < candidates.length; i++) {
-            if (candidates[i] == candidates[i - 1])
+        for (int i = level; i < candidates.length && candidates[i] <= target; i++) {
+            if (level < i && candidates[i] == candidates[i - 1])
                 continue;
-            if (candidates[i] > target)
-                return;
             list.add(candidates[i]);
             combinationSum2(ans, candidates, target - candidates[i], i + 1, list);
             list.remove(list.size() - 1);
